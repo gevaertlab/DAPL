@@ -1,5 +1,4 @@
-# DAPL
-A deep learning framework for imputing missing values in genomic data
+# DAPL: A deep learning framework for imputing missing values in genomic data
 
 Yeping Lina Qiu, Hong Zheng, Olivier Gevaert
 Stanford University
