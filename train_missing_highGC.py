@@ -2,7 +2,6 @@ import os
 import tensorflow as tf
 import pandas as pd
 import time
-from utils import *
 from autoencoder import *
 
 
