@@ -68,7 +68,7 @@ if __name__ == '__main__':
             batch_shape = (1, feature_size)
             np.set_printoptions(threshold=np.inf)
             tf.reset_default_graph()
-            loss_val=reconstruct_loss(true_cur_test,cur_test,autoencoder19_d, 'imputationmodel.ckpt',missing_index)
+            loss_val=reconstruct_loss(true_cur_test,cur_test,autoencoder4_d, 'imputationmodel.ckpt',missing_index)
             
             loss_list=np.append(loss_list,loss_val)  
             print(loss_val)
