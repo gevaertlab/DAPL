@@ -139,7 +139,7 @@ if __name__ == '__main__':
         batch_shape = (batch_size, feature_size)
         np.set_printoptions(threshold=np.inf)
         tf.reset_default_graph()
-        loss_val_list_train, loss_val_list_test=train(nonmissing_perc,dataset_train,dataset_test,autoencoder_fun=autoencoder19_d, sav=True,restore=False, checkpoint_file='imputationmodel.ckpt')  
+        loss_val_list_train, loss_val_list_test=train(nonmissing_perc,dataset_train,dataset_test,autoencoder_fun=autoencoder4_d, sav=True,restore=False, checkpoint_file='imputationmodel.ckpt')  
         np.savetxt("trainloss.csv", loss_val_list_train, delimiter="\t")
         np.savetxt("validationloss.csv", loss_val_list_test, delimiter="\t")  
         
