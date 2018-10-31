@@ -130,9 +130,10 @@ if __name__ == '__main__':
         dataset_train = df_use.iloc[train_ind]
         dataset_test = df_use.iloc[test_ind]
         
-        batch_size=128
-        nonmissing_perc=0.7
-        feature_size=17176
+        #Parameters
+        batch_size=128 
+        nonmissing_perc=0.7 #Percent of non-missing elements in the data
+        feature_size=17176  #Dimension of the feature
         lr = 0.1
         num_epochs = 450
         
