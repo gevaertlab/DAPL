@@ -3,6 +3,8 @@ import tensorflow as tf
 import pandas as pd
 import time
 from autoencoder import *
+import sys
+import random
 
 
 def get_next_batch(dataset, batch_size,step,ind):
@@ -107,10 +109,18 @@ def train(nonmissing_perc,dataset_train,dataset_test,autoencoder_fun, restore=Fa
 #tf.reset_default_graph()
 #with tf.Graph().as_default(): 
 if __name__ == '__main__':
-        df= pd.read_csv("rna_naremoved_logtransformed_normalized.csv")  
+
+		input_name=sys.argv[1] # 'rna_naremoved_logtransformed_normalized.csv'
+		output_path=sys.argv[2] #'imputationmodel.ckpt'
+		feature_size=sys.argv[3] #Dimension of the feature, 17176
+		nonmissing_perc=sys.argv[4] #Percent of non-missing elements in the data, 0.7
+		batch_size=sys.argv[5] #128
+		lr=sys.argv[6] #0.1
+		num_epochs=sys.argv[7] #450
+		
+        df= pd.read_csv(input_name)  
         df.drop(df.columns[[0]], axis=1, inplace=True)
-        import random
-    
+   
         ####Create set for training & validation, and for testing
         arr=list(range(df.shape[0]))
         random.seed(1)
@@ -130,19 +140,13 @@ if __name__ == '__main__':
         dataset_train = df_use.iloc[train_ind]
         dataset_test = df_use.iloc[test_ind]
         
-        #Parameters
-        batch_size=128 
-        nonmissing_perc=0.7 #Percent of non-missing elements in the data
-        feature_size=17176  #Dimension of the feature
-        lr = 0.1
-        num_epochs = 450
         
         batch_shape = (batch_size, feature_size)
         np.set_printoptions(threshold=np.inf)
         tf.reset_default_graph()
-        loss_val_list_train, loss_val_list_test=train(nonmissing_perc,dataset_train,dataset_test,autoencoder_fun=autoencoder4_d, sav=True,restore=False, checkpoint_file='imputationmodel.ckpt')  
-        np.savetxt("trainloss.csv", loss_val_list_train, delimiter="\t")
-        np.savetxt("validationloss.csv", loss_val_list_test, delimiter="\t")  
+        loss_val_list_train, loss_val_list_test=train(nonmissing_perc,dataset_train,dataset_test,autoencoder_fun=autoencoder4_d, sav=True,restore=False, checkpoint_file=output_path)  
+        #np.savetxt("trainloss.csv", loss_val_list_train, delimiter="\t")
+        #np.savetxt("validationloss.csv", loss_val_list_test, delimiter="\t")  
         
         
         
