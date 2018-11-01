@@ -51,7 +51,6 @@ if __name__ == '__main__':
 
     
         holdout_cohort= pd.read_csv(input_name)  
-        holdout_cohort.drop(holdout_cohort.columns[[0]], axis=1, inplace=True)
 
         np.random.seed(1)
         corrupted_holdout_cohort=holdout_cohort.apply(mask_dfrow,perc=nonmissing_perc,axis=1)
