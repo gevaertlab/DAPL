@@ -42,20 +42,17 @@ def mask_dfrow(row,perc):
 
 if __name__ == '__main__':
     
-        df= pd.read_csv("rna_naremoved_logtransformed_normalized.csv")  
-        df.drop(df.columns[[0]], axis=1, inplace=True)
-        arr=list(range(df.shape[0]))
-        random.seed(1)
-        random.shuffle(arr)
-        use_ind=arr[0:int(df.shape[0]*0.75)]
-        holdout_ind=arr[int(df.shape[0]*0.75):len(arr)]
-        df_use = df.iloc[use_ind]
-        df_holdout = df.iloc[holdout_ind]
-        test_sample_n=100
-        feature_size=17176
-        holdout_cohort=df_holdout.iloc[0:test_sample_n]
-        
-        nonmissing_perc=0.7
+        input_name=sys.argv[1] # 'testdata_100sample.csv'
+        output_path=sys.argv[2] # "testloss_100sample.csv"
+        model_path=sys.argv[3] # 'imputationmodel.ckpt'
+        feature_size=sys.argv[4] #Dimension of the feature, 17176
+        nonmissing_perc=sys.argv[5] #Percent of non-missing elements in the data, 0.7
+
+
+    
+        holdout_cohort= pd.read_csv(input_name)  
+        holdout_cohort.drop(holdout_cohort.columns[[0]], axis=1, inplace=True)
+
         np.random.seed(1)
         corrupted_holdout_cohort=holdout_cohort.apply(mask_dfrow,perc=nonmissing_perc,axis=1)
         
@@ -68,12 +65,12 @@ if __name__ == '__main__':
             batch_shape = (1, feature_size)
             np.set_printoptions(threshold=np.inf)
             tf.reset_default_graph()
-            loss_val=reconstruct_loss(true_cur_test,cur_test,autoencoder4_d, 'imputationmodel.ckpt',missing_index)
+            loss_val=reconstruct_loss(true_cur_test,cur_test,autoencoder4_d, model_path ,missing_index)
             
             loss_list=np.append(loss_list,loss_val)  
             print(loss_val)
             if i%5==0:
-                np.savetxt("testloss100sample.csv", loss_list, delimiter="\t")
+                np.savetxt(output_path, loss_list, delimiter="\t")
         
         
                 

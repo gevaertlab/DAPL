@@ -111,11 +111,11 @@ def train(nonmissing_perc,dataset_train,dataset_test,autoencoder_fun, restore=Fa
 if __name__ == '__main__':
 
         input_name=sys.argv[1] # 'rna_naremoved_logtransformed_normalized.csv'
-        put_path=sys.argv[2] #'imputationmodel.ckpt'
-        ture_size=sys.argv[3] #Dimension of the feature, 17176
-        missing_perc=sys.argv[4] #Percent of non-missing elements in the data, 0.7
-        ch_size=sys.argv[5] #128
-        sys.argv[6] #0.1
+        output_path=sys.argv[2] #'imputationmodel.ckpt'
+        feature_size=sys.argv[3] #Dimension of the feature, 17176
+        nonmissing_perc=sys.argv[4] #Percent of non-missing elements in the data, 0.7
+        batch_size=sys.argv[5] #128
+        lr=sys.argv[6] #0.1
         num_epochs=sys.argv[7] #450
 		
         df= pd.read_csv(input_name)  
